@@ -126,4 +126,4 @@ To start **`python-app-with-scan-pipeline`** on every push to `main`, see:
 oc apply -f spring-boot-pipeline.yml
 ```
 
----
+--- ---
