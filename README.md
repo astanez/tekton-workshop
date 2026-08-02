@@ -109,7 +109,7 @@ oc get route python-web-app
 
 To start **`python-app-with-scan-pipeline`** on every push to `main`, see:
 
-[`openshift/tekton_ws_part2/WEBHOOK.md`](openshift/tekton_ws_part2/WEBHOOK.md)
+[`openshift/tekton_ws_part2/triggers/WEBHOOK.md`](openshift/tekton_ws_part2/triggers/WEBHOOK.md)
 
 ---
 
