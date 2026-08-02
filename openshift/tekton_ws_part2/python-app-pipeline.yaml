@@ -9,7 +9,8 @@ spec:
   params:
     - name: repo-url
       type: string
-      description: "Git repository URL containing the Python app"
+      description: "Git repository URL containing the Python app and Dockerfile"
+      default: "https://github.com/astanez/tekton-workshop.git"
     - name: image-reference
       type: string
       description: "The internal image registry path (without the tag)"

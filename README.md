@@ -29,7 +29,7 @@ A small Flask app that listens on port `8080`.
 src/
   app.py                 # Flask application
   requirements.txt       # Python dependencies
-Dockerfile               # registry.access.redhat.com/ubi10/python-312
+Dockerfile               # registry.access.redhat.com/ubi10/python-312-minimal
 openshift/
   tekton_ws_part1/       # Workshop part 1
   tekton_ws_part2/       # Deployment, Service, Route, pipeline
