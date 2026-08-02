@@ -1,0 +1,16 @@
+### Create project
+apiVersion: project.openshift.io/v1
+kind: ProjectRequest
+metadata:
+  name: tekton-intro-ws3
+displayName: "My tekton intro ws 3"
+description: "project"
+
+
+### Create a simple ConfigMap YAML
+apiVersion: v1 
+kind: ConfigMap 
+metadata: 
+  name: tkn-workshop-config 
+data: 
+  settings.txt: "Hello from the Tekton Workshop!"

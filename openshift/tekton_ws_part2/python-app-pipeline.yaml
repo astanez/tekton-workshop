@@ -1,0 +1,85 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: python-app-pipeline
+spec:
+  workspaces:
+    - name: shared-data
+      description: "Workspace to share code between tasks"
+  params:
+    - name: repo-url
+      type: string
+      description: "Git repository URL containing the Python app"
+    - name: image-reference
+      type: string
+      description: "The internal image registry path (without the tag)"
+      default: "image-registry.openshift-image-registry.svc:5000/$(context.pipelineRun.namespace)/python-web-app"
+    - name: dockerfile
+      type: string
+      default: "./Dockerfile"
+  tasks:
+    # Task 1: Clone the code
+    - name: fetch-repository
+      taskRef:
+        resolver: cluster
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: git-clone
+          - name: namespace
+            value: openshift-pipelines
+      workspaces:
+        - name: output
+          workspace: shared-data
+      params:
+        - name: URL
+          value: "$(params.repo-url)"
+        - name: deleteExisting
+          value: "true"
+
+    # Task 2: Build and push the image with Buildah
+    - name: build-image
+      taskRef:
+        resolver: cluster
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: buildah
+          - name: namespace
+            value: openshift-pipelines
+      runAfter:
+        - fetch-repository
+      workspaces:
+        - name: source
+          workspace: shared-data
+      params:
+        - name: IMAGE
+          value: "$(params.image-reference):$(context.pipelineRun.name)"
+        - name: DOCKERFILE
+          value: "$(params.dockerfile)"
+        - name: TLSVERIFY
+          value: "false"
+
+    # Task 3: Update the Deployment with the newly built image
+    - name: deploy-app
+      taskRef:
+        resolver: cluster
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: openshift-client
+          - name: namespace
+            value: openshift-pipelines
+      runAfter:
+        - build-image
+      params:
+        - name: SCRIPT
+          value: |
+            IMAGE_WITH_TAG="$(params.image-reference):$(context.pipelineRun.name)"
+
+            echo "Updating deployment/python-web-app image to $IMAGE_WITH_TAG..."
+            oc set image deployment/python-web-app python-web-app=$IMAGE_WITH_TAG
+            oc rollout status deployment/python-web-app --timeout=120s
