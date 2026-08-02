@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Tekton Intro Workshop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&family=Outfit:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="glow glow-a" aria-hidden="true"></div>
+    <div class="glow glow-b" aria-hidden="true"></div>
+
+    <main class="stage">
+      <p class="eyebrow">Tekton <span class="amp">&amp;</span> OpenShift</p>
+      <h1>Welcome to Tekton Intro Workshop</h1>
+      <p class="lede">
+        Welcome to Tekton Intro Workshop — a little Python app, built and shipped
+        through cloud-native pipelines.
+      </p>
+
+      <div class="logos" role="list">
+        <article class="logo-card" role="listitem" style="--delay: 0s">
+          <div class="logo-orb">
+            <!-- Tekton icon (simplified CNCF mark) -->
+            <svg
+              class="logo-svg tekton"
+              viewBox="0 0 64 64"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="tektonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#7ec8ff" />
+                  <stop offset="100%" stop-color="#3d8bfd" />
+                </linearGradient>
+              </defs>
+              <path
+                fill="url(#tektonGrad)"
+                d="M32 6c1.2 0 2.2.7 2.7 1.8l6.2 14.1 15.3 1.4c2.5.2 3.5 3.3 1.6 4.9L46.5 39l3.3 14.9c.5 2.4-2.1 4.2-4.2 3L32 49.7 18.4 56.9c-2.1 1.2-4.7-.6-4.2-3L17.5 39 6.2 28.2c-1.9-1.6-.9-4.7 1.6-4.9l15.3-1.4 6.2-14.1C29.8 6.7 30.8 6 32 6z"
+              />
+              <path
+                fill="#0b1f3a"
+                d="M32 18.5c.5 0 .9.3 1.1.7l2.8 6.4 6.9.6c.9.1 1.3 1.2.6 1.8l-5.2 4.7 1.5 6.8c.2 1.1-.9 1.9-1.9 1.4L32 37.5l-5.8 3.4c-1 .5-2.1-.3-1.9-1.4l1.5-6.8-5.2-4.7c-.7-.6-.3-1.7.6-1.8l6.9-.6 2.8-6.4c.2-.4.6-.7 1.1-.7z"
+              />
+            </svg>
+          </div>
+          <h2>Tekton</h2>
+          <p>Cloud-native pipelines</p>
+        </article>
+
+        <div class="plus" aria-hidden="true">✦</div>
+
+        <article class="logo-card" role="listitem" style="--delay: 0.15s">
+          <div class="logo-orb">
+            <!-- OpenShift-inspired mark -->
+            <svg
+              class="logo-svg openshift"
+              viewBox="0 0 64 64"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="osGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#4ea1ff" />
+                  <stop offset="55%" stop-color="#8ec8ff" />
+                  <stop offset="100%" stop-color="#c8e4ff" />
+                </linearGradient>
+              </defs>
+              <path
+                fill="url(#osGrad)"
+                d="M32 8c13.3 0 24 10.7 24 24S45.3 56 32 56 8 45.3 8 32 18.7 8 32 8zm0 6c-9.9 0-18 8.1-18 18s8.1 18 18 18 18-8.1 18-18-8.1-18-18-18z"
+              />
+              <path
+                fill="url(#osGrad)"
+                d="M14 30.5c8.5-10 19.2-15.8 30.8-16.8 1.1-.1 1.9.9 1.5 1.9-3.4 8.2-10.2 15.2-19.3 19.8-1 .5-2.1-.3-1.9-1.4.7-3.8.4-7.7-1.1-11.2-.3-.7-1.1-1.1-1.8-.9-3.3.8-6.3 2.6-8.2 5.2-.5.7-1.5.8-2 .2-.6-.5-.5-1.4 0-2.2z"
+              />
+              <circle cx="40.5" cy="24.5" r="3.2" fill="#0b1f3a" />
+            </svg>
+          </div>
+          <h2>OpenShift</h2>
+          <p>Enterprise Kubernetes</p>
+        </article>
+      </div>
+
+      <footer class="foot">
+        <span class="pill">Python · Flask · UBI 10</span>
+        <span class="pill soft">Hello from your pipeline ✨</span>
+      </footer>
+    </main>
+  </body>
+</html>

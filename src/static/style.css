@@ -1,0 +1,250 @@
+:root {
+  --navy-950: #06101f;
+  --navy-900: #0a1a33;
+  --navy-800: #102448;
+  --navy-700: #16325f;
+  --blue-400: #6eb6ff;
+  --blue-300: #9ed0ff;
+  --blue-200: #c5e3ff;
+  --ink: #e8f2ff;
+  --muted: #9bb4d4;
+  --card: rgba(16, 40, 78, 0.55);
+  --stroke: rgba(158, 208, 255, 0.22);
+  --shadow: 0 24px 60px rgba(2, 10, 28, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Outfit", system-ui, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 700px at 15% -10%, #1a3f78 0%, transparent 55%),
+    radial-gradient(900px 600px at 90% 10%, #12305f 0%, transparent 50%),
+    linear-gradient(165deg, var(--navy-950) 0%, var(--navy-900) 45%, #0d2344 100%);
+  overflow-x: hidden;
+  display: grid;
+  place-items: center;
+  padding: 2.5rem 1.25rem;
+}
+
+.glow {
+  position: fixed;
+  width: 28rem;
+  height: 28rem;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-a {
+  top: -8rem;
+  left: -6rem;
+  background: #1e4f9a;
+  animation: drift 14s ease-in-out infinite;
+}
+
+.glow-b {
+  right: -8rem;
+  bottom: -10rem;
+  background: #2a6cc4;
+  animation: drift 18s ease-in-out infinite reverse;
+}
+
+.stage {
+  position: relative;
+  z-index: 1;
+  width: min(720px, 100%);
+  text-align: center;
+  animation: rise 0.9s ease-out both;
+}
+
+.eyebrow {
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue-400);
+  margin-bottom: 0.85rem;
+}
+
+h1 {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.1rem, 6vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.85rem;
+  background: linear-gradient(120deg, #f2f8ff 10%, var(--blue-300) 55%, var(--blue-400) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.amp {
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.lede {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 34rem;
+  margin: 0 auto 2.4rem;
+}
+
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 1.25rem;
+  margin-bottom: 2.2rem;
+}
+
+.logo-card {
+  width: min(220px, 100%);
+  padding: 1.5rem 1.25rem 1.35rem;
+  border-radius: 1.4rem;
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  animation: float 5.5s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.logo-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: rgba(158, 208, 255, 0.45);
+}
+
+.logo-orb {
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(200, 227, 255, 0.28), transparent 45%),
+    linear-gradient(160deg, #1a3f78, #0f2a55);
+  border: 1px solid rgba(158, 208, 255, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 10px 28px rgba(8, 30, 70, 0.45);
+}
+
+.logo-svg {
+  width: 3.1rem;
+  height: 3.1rem;
+}
+
+.logo-card h2 {
+  font-family: "Nunito", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+  color: var(--blue-200);
+}
+
+.logo-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.plus {
+  font-size: 1.35rem;
+  color: var(--blue-400);
+  opacity: 0.8;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+}
+
+.pill {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.65rem;
+  color: var(--blue-200);
+  background: rgba(30, 79, 154, 0.35);
+  border: 1px solid rgba(110, 182, 255, 0.25);
+}
+
+.pill.soft {
+  font-weight: 600;
+  color: var(--muted);
+  background: rgba(10, 26, 51, 0.5);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(24px, 16px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+@media (max-width: 560px) {
+  .plus {
+    width: 100%;
+    order: 0;
+  }
+}
