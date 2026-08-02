@@ -1,0 +1,27 @@
+
+
+# It is possible to configure the pruner to clean up old PipelineRuns. 
+# It can be configured in the TektonConfig custom resource.
+# You will find the example in the TektonConfig custom resource.
+apiVersion: operator.tekton.dev/v1alpha1
+kind: TektonConfig
+metadata:
+  name: config
+spec:
+  pruner:
+    # How often the cleanup job runs
+    schedule: "0 8 * * *" 
+    # How many successful runs to keep per Pipeline
+    keep: 3 
+    # How many failed runs to keep per Pipeline
+    keep-failed: 1
+
+
+# It should be possible to configure target namespace for the pruner. 
+spec:
+  targetNamespace: ...
+  # ... (other existing configurations might be here) ...
+  pruner:
+    schedule: "0 8 * * *"
+    keep: 3
+    keep-failed: 1
