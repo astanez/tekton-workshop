@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: el-python-app-listener
+  labels:
+    app.kubernetes.io/managed-by: EventListener
+    eventlistener: python-app-listener
+spec:
+  to:
+    kind: Service
+    name: el-python-app-listener
+    weight: 100
+  port:
+    targetPort: http-listener
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

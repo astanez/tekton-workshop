@@ -1,4 +1,4 @@
-# Tekton Workspace
+# Tekton Workspace 
 
 Sample apps and Tekton / OpenShift manifests for practicing CI/CD pipelines.
 
@@ -9,7 +9,7 @@ Sample apps and Tekton / OpenShift manifests for practicing CI/CD pipelines.
 | `src/` | Minimal Flask Python web app |
 | `Dockerfile` | UBI 10 (Python 3.12) image for the Python app |
 | `openshift/tekton_ws_part1/` | Part 1 workshop resources (ConfigMap, custom Task) |
-| `openshift/tekton_ws_part2/` | Part 2: Python app Deployment, Service, Route, and pipeline |
+| `openshift/tekton_ws_part2/` | Part 2: Python app Deployment, Service, Route, pipelines, and GitHub Triggers |
 | `spring-boot-pipeline.yml` | Spring Boot Tekton pipeline (clone → s2i-java → Trivy scan → deploy) |
 
 ---
@@ -104,6 +104,12 @@ After a successful run:
 ```bash
 oc get route python-web-app
 ```
+
+### GitHub webhook (push → pipeline)
+
+To start **`python-app-with-scan-pipeline`** on every push to `main`, see:
+
+[`openshift/tekton_ws_part2/WEBHOOK.md`](openshift/tekton_ws_part2/WEBHOOK.md)
 
 ---
 

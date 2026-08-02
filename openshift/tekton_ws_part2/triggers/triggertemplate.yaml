@@ -1,0 +1,32 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: python-app-with-scan-template
+spec:
+  params:
+    - name: git-repo-url
+      description: Git repository clone URL from the webhook
+    - name: git-revision
+      description: Commit SHA that triggered the push
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1
+      kind: PipelineRun
+      metadata:
+        generateName: python-app-with-scan-
+        labels:
+          triggered-by: github-push
+      spec:
+        pipelineRef:
+          name: python-app-with-scan-pipeline
+        params:
+          - name: repo-url
+            value: $(tt.params.git-repo-url)
+        workspaces:
+          - name: shared-data
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                resources:
+                  requests:
+                    storage: 1Gi
