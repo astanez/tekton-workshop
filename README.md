@@ -1,4 +1,4 @@
-# Tekton Workspace
+# Tekton Intro Workshop
 
 Sample apps and Tekton / OpenShift manifests for practicing CI/CD pipelines.
 
