@@ -1,0 +1,76 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: my-test-task
+spec:
+  # 1. Define the input variable
+  params:
+    - name: hello-text
+      type: string
+      default: "Hello Tekton"
+      description: "A simple text variable to be read in step 1"
+
+  # 2. Define the workspace for persistent storage
+  workspaces:
+    - name: my-ws
+      description: "A workspace that will be backed by a storage defined during runtime"
+
+  # 3. Define the volume for the ConfigMap
+  volumes:
+    - name: config-volume
+      configMap:
+        name: tkn-workshop-config
+
+  steps:
+    - name: read-variable
+      description: "# --- STEP 1: Read data from a text variable ---"
+      image: registry.access.redhat.com/ubi9/ubi-micro:latest
+      script: |
+        #!/bin/sh
+        echo "=== Step 1: Reading from variable ==="
+        echo "The variable contains: $(params.hello-text)"
+
+    # --- STEP 2: Read data from the ConfigMap ---
+    - name: read-configmap
+      description: "# --- STEP 2: Read data from the ConfigMap ---"      
+      image: registry.access.redhat.com/ubi9/ubi-micro:latest
+      volumeMounts:
+        - name: config-volume
+          mountPath: /workspace/config
+      script: |
+        #!/bin/sh        
+        echo "=== Step 2: Reading from ConfigMap ==="
+        echo "Listing the keys (files) available in the ConfigMap:"
+        ls -1 /workspace/config
+        
+        echo ""
+        echo "Content of config map:"
+        # Example: If your ConfigMap has a key called 'settings.conf'
+        cat /workspace/config/*
+
+    - name: write-to-storage
+      description: "# --- STEP 3: Write data to persistent storage ---"
+      image: registry.access.redhat.com/ubi9/ubi-micro:latest
+      script: |
+        #!/bin/sh
+        echo "=== Step 3: Writing to Persistent Storage ==="
+        
+        # The path is dynamically resolved based on the workspace configuration
+        FILE_PATH="$(workspaces.my-ws.path)/saved-message.txt"
+        
+        echo "Writing following data into the persistent volume:"
+        echo "$(params.hello-text) - Data successfully saved!"
+        echo "$(params.hello-text) - Data successfully saved!" > "$FILE_PATH"
+        echo "Data written to $FILE_PATH"
+
+    - name: read-from-storage
+      description: "# --- STEP 4: Read data from persistent storage ---"
+      image: registry.access.redhat.com/ubi9/ubi-micro:latest
+      script: |
+        #!/bin/sh
+        echo "=== Step 4: Reading from Persistent Storage ==="
+        
+        FILE_PATH="$(workspaces.my-ws.path)/saved-message.txt"
+        
+        echo "Reading the contents of the file created in Step 3:"
+        cat "$FILE_PATH"
