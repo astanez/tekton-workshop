@@ -50,7 +50,7 @@ This part showcases:
 5. Take a look at PipeLineRun config.  
 
 
-
+---
 
 ## Workshop Part 2 — Building a Tekton Pipeline for a Python app
 
@@ -60,7 +60,7 @@ This part showcases:
 
 Used in **Workshop Part 2**. A small Flask app on port `8080` with a dark-blue Tekton / OpenShift landing page.
 
-### Layout
+#### Layout
 
 ```
 src/
@@ -73,7 +73,7 @@ src/
 Dockerfile               # registry.access.redhat.com/ubi10/python-312-minimal
 ```
 
-### Run locally
+#### How to run locally
 
 ```bash
 cd src
@@ -83,7 +83,7 @@ python app.py
 
 Open [http://localhost:8080](http://localhost:8080).
 
-### Build and run the container
+#### How to build and run the container locally
 
 From the repository root (where the `Dockerfile` lives):
 
@@ -92,12 +92,11 @@ podman build -t python-web-app .
 podman run --rm -p 8080:8080 python-web-app
 ```
 
----
 
-## Workshop Part 2 — Building a Tekton Pipeline for the Python app
+### Workshop Part 2 — Process in follwowing steps
 
 
-Deploy the app resources, then apply the pipeline:
+#### 1. Deploy the app resources via Web Console or via CLI, then apply the pipeline:
 
 ```bash
 oc apply -f openshift/tekton_ws_part2/deployment.yaml
@@ -106,13 +105,13 @@ oc apply -f openshift/tekton_ws_part2/route.yaml
 oc apply -f openshift/tekton_ws_part2/python-app-pipeline.yaml
 ```
 
-### Pipeline steps (`python-app-pipeline`)
+#### 2. Look at Pipeline tasks (`python-app-pipeline`)
 
-1. **git-clone** — clones the application repository  
-2. **buildah** — builds and pushes the image to the internal OpenShift registry  
-3. **openshift-client** — updates `deployment/python-web-app` with the new image and waits for rollout  
+a. **git-clone** — clones the application repository  
+b. **buildah** — builds and pushes the image to the internal OpenShift registry  
+c. **openshift-client** — updates `deployment/python-web-app` with the new image and waits for rollout  
 
-### Pipeline parameters
+#### Look at Pipeline parameters
 
 | Parameter | Description |
 |-----------|-------------|
@@ -120,8 +119,33 @@ oc apply -f openshift/tekton_ws_part2/python-app-pipeline.yaml
 | `image-reference` | Internal image path without tag (defaults to the project’s `python-web-app` image) |
 | `dockerfile` | Path to the Dockerfile (default: `./Dockerfile`) |
 
-### GitHub webhook (push → pipeline)
 
-To start **`python-app-with-scan-pipeline`** on every push to `main`, see:
+#### 3. Run Pipeline (`python-app-pipeline`)
+
+Observe logs and created containers. Run the app in the browser. 
+
+
+#### 4. Apply Pipeline (`python-app-with-scan-pipeline`)
+
+```bash
+oc apply -f openshift/tekton_ws_part2/python-app-with-scan-pipeline.yaml
+```
+
+#### 5. Run Pipeline (`python-app-with-scan-pipeline`)
+
+Observe logs and created containers. Notice there is a vulnerability scan task. ‚
+Run the app in the browser. 
+
+#### 6. Configure GitHub webhook for python-app-with-scan-pipeline (push → pipeline)
+
+To start **`python-app-with-scan-pipeline`** on every push to `main`, see the guide:
 
 [`openshift/tekton_ws_part2/triggers/WEBHOOK.md`](openshift/tekton_ws_part2/triggers/WEBHOOK.md)
+
+
+#### 6. Make changes in the app. Commit and push. 
+
+See if the PipelineRun was startet. Observe it. 
+Run the app in the browser and see the changes. 
+
+---
