@@ -93,7 +93,7 @@ podman run --rm -p 8080:8080 python-web-app
 ```
 
 
-### Workshop Part 2 — Process in follwowing steps
+### Workshop Part 2 — Process in following steps
 
 
 #### 1. Deploy the app resources via Web Console or via CLI, then apply the pipeline:
