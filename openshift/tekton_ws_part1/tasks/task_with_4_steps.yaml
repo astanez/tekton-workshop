@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1
 kind: Task
 metadata:
-  name: my-test-task
+  name: task-with-4-steps
 spec:
   # 1. Define the input variable
   params:
@@ -10,16 +10,16 @@ spec:
       default: "Hello Tekton"
       description: "A simple text variable to be read in step 1"
 
-  # 2. Define the workspace for persistent storage
-  workspaces:
-    - name: my-ws
-      description: "A workspace that will be backed by a storage defined during runtime"
-
-  # 3. Define the volume for the ConfigMap
+   # 2. Define the volume for the ConfigMap
   volumes:
     - name: config-volume
       configMap:
         name: tkn-workshop-config
+
+  # 3. Define the workspace for persistent storage
+  workspaces:
+    - name: my-ws
+      description: "A workspace that will be backed by a storage defined during runtime"
 
   steps:
     - name: read-variable

@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: print-param-volume
+spec:
+  params:
+    - name: hello-text
+      type: string
+      default: "Hello Tekton"     
+  volumes:
+    - name: config-volume
+      configMap:
+        name: tkn-workshop-config
+  steps:
+    - name: read-variable
+      image: registry.access.redhat.com/ubi9/ubi-micro:latest
+      volumeMounts:
+        - name: config-volume
+          mountPath: /workspace/config
+      script: |
+        #!/bin/sh
+        echo "The variable hello-text contains: $(params.hello-text)"
+        echo "Content of config map:"
+        ls -1 /workspace/config
+        cat /workspace/config/*    
+
+

@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: print-env-var
+spec:
+  steps:
+    - name: print-env
+      description: "Print environment variables defined on this step"
+      image: registry.access.redhat.com/ubi9/ubi-micro:latest
+      env:        
+        - name: GREETING
+          value: "Hello from env var"
+      script: |
+        #!/bin/sh
+        echo "=== Printing environment variables ==="        
+        echo "GREETING  = ${GREETING}"

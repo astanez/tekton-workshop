@@ -1,0 +1,28 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata: 
+  name: read-write-workspaces  
+spec:
+  params:
+    - default: Hello Tekton
+      name: hello-text
+      type: string
+  workspaces:    
+    - name: my-ws
+  steps:
+    - name: write-to-storage
+      image: 'registry.access.redhat.com/ubi9/ubi-micro:latest'
+      script: |
+        #!/bin/sh
+        FILE_PATH="$(workspaces.my-ws.path)/saved-message.txt"
+        echo "Writing following data into the persistent volume:"
+        echo "$(params.hello-text) - Data successfully saved!"
+        echo "$(params.hello-text) - Data successfully saved!" > "$FILE_PATH"
+        echo "Data written to $FILE_PATH"
+    - name: read-from-storage
+      image: 'registry.access.redhat.com/ubi9/ubi-micro:latest'      
+      script: |
+        #!/bin/sh
+        FILE_PATH="$(workspaces.my-ws.path)/saved-message.txt"
+        echo "Reading the contents of the file created in Step 3:"
+        cat "$FILE_PATH"  
