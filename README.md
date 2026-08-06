@@ -15,7 +15,9 @@ Sample apps and Tekton / OpenShift manifests for practicing CI/CD pipelines.
 
 ## Workshop Part 1 — Create your own first Task
 
-**Objective:** learn how to author a custom Tekton Task and run it on OpenShift.
+**Objective:** learn how to write a custom Tekton Task and run it on OpenShift.
+
+### Workshop Part 1 Content
 
 This part showcases:
 
@@ -25,16 +27,21 @@ This part showcases:
 | **ConfigMap** | Mount a ConfigMap into a step and print its contents |
 | **Exchange data between steps** | Write from one step to a workspace, read it in a later step |
 
-### Resources
+#### Resources
 
 | File | Description |
 |------|-------------|
-| `openshift/tekton_ws_part1/project_confmap.yaml` | Sample project request and ConfigMap `tkn-workshop-config` |
-| `openshift/tekton_ws_part1/my_test_task.yaml` | Custom Task `my-test-task` |
+| `project_confmap.yaml` | Sample project request and ConfigMap `tkn-workshop-config` |
+| `tasks/print_env_var.yaml` | Print step environment variables |
+| `tasks/print_param_volume.yaml` | Use a Task parameter and read a mounted ConfigMap |
+| `tasks/read_write_workspaces.yaml` | Write in one step, read in another via a workspace |
+| `tasks/task_with_4_steps.yaml` | Combined Task: params + ConfigMap + workspace exchange |
+| `PipelineRun.yaml` | Example PipelineRun with a PVC-backed workspace |
+| `telton_pruner.yaml` | Example pruner config for old PipelineRuns |
 
-### What the Task does
+#### What `task-with-4-steps` does
 
-`my-test-task` runs four steps:
+`task-with-4-steps` runs four steps:
 
 1. **read-variable** — reads the `hello-text` parameter and prints it  
 2. **read-configmap** — mounts ConfigMap `tkn-workshop-config` and prints its keys/values  
@@ -43,10 +50,11 @@ This part showcases:
 
 ### Proceed in following steps
 
-1. Apply the task
+1. Create project and ConfigMap by applying project_confmap.yaml 
+2. Create tasks by applying configs from tasks/
 2. Analyse the task config. Understand the variables, volumes, workspaces, 
-3. Start to create a pipelinge for this taks. Take a look at pipeline workspaces. Understand all shared-workspaces options 
-4. Observe the logs, pvs, pv, created containers 
+3. Create an run pipelins for these taks. Take a look at pipeline workspaces. Understand all shared-workspaces options.  
+4. Observe the pvs, pv, pods, containers and logs
 5. Take a look at PipeLineRun config.  
 
 
@@ -148,5 +156,4 @@ To start **`python-app-with-scan-pipeline`** on every push to `main`, see the gu
 See if the PipelineRun was startet. Observe it. 
 Run the app in the browser and see the changes. 
 
-.
 ---
